@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 	$("#alertSuccess").hide();
 	$("#alertError").hide();
-	$("#hidOrderIDSave").val("");
+	$("#hidReviewIDSave").val("");
 	$("#formItem")[0].reset();
 });
 

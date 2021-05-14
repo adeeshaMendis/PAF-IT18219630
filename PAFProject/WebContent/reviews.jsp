@@ -1,4 +1,4 @@
-<%@page import="model.Review"%>
+<%@page import="com.Review"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 pageEncoding="ISO-8859-1"%>
 
@@ -6,11 +6,10 @@ pageEncoding="ISO-8859-1"%>
 <html>
 
 <head>
-	<meta charset="UTF-8">
+	<meta charset="ISO-8859-1">
 
 	<title>Reviews Management</title>
 	
-	<link href="style.css" rel="stylesheet" />
 	<link rel="stylesheet" href="Views/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 	<script src="Components/jquery-3.5.0.min.js"></script>
@@ -18,17 +17,18 @@ pageEncoding="ISO-8859-1"%>
 </head>
 
 <body>
+		<div class="container">
 		
 		<p class="font-weight-bold">
 				<center>
-					<h1><u><i><b>Reviews Management</b></i></u></h1>
+					<h1><u><b>Reviews Management</b></u></h1>
 				</center>
 					
 			</p>
 				
 				<fieldset>
 	
-				<center> <legend><b>Add Review Details</b></legend> </center>
+				<center> <legend><i><b>Add Review Details</b></i></legend> </center>
 					<form id="formItem" name="formItem" class="border border-light p-5">
 						
 						<div class="form-outline mb-4">
@@ -65,8 +65,8 @@ pageEncoding="ISO-8859-1"%>
 		<br>
 			<center> 
 		
-		<div id="reviewGrid">
-		<form method="post" action="reviews.jsp" class="table table-striped">
+		<div id="reviewGrid" >
+		<form method="post" action="reviews.jsp" class="table table-striped table-hover" >
 			 <%
 		 		Review reviewObj = new Review();
 				out.print(reviewObj.readReviews());
@@ -76,5 +76,6 @@ pageEncoding="ISO-8859-1"%>
 				</center>
 		
 		</div> </div> 
+		</div>
 	</body>
 </html>
