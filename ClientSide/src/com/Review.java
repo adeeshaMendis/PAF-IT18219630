@@ -85,7 +85,7 @@ public class Review {
 		 return "Error while connecting to the database for inserting.";
 		 }
 		 
-		 //check values are empty or not
+		/* //check values are empty or not
 		if(reviewType.equals("")|| reviewDesc.equals("") || reviewValue.equals("")){
 			 return "Please fill all the details";
 		}
@@ -101,11 +101,10 @@ public class Review {
 		{
 			return "Rating value must be between 1-5";
 		}
-
-		 else  {
+*/
+		  
 			 // create a prepared statement
-			 String query = " insert into reviews(reviewID,reviewType,reviewDesc,reviewValue)"
-			 + " values (?,?, ?, ?)";
+			 String query = " insert into reviews(reviewID,reviewType,reviewDesc,reviewValue)" + " values (?,?, ?, ?)";
 			 PreparedStatement preparedStmt = con.prepareStatement(query);
 			 // binding values
 			 preparedStmt.setInt(1, 0);
@@ -117,9 +116,11 @@ public class Review {
 	
 			 preparedStmt.execute();
 			 con.close();
-			 output = "Review added successfully";
-		 }		  		 		 
+			 String newItems = readReviews();
+			 output = "{\"status\":\"success\", \"data\": \"" +
+			 newItems + "\"}";		 	  		 		 
 		 }
+		 
 		 catch (Exception e)
 		 {
 		 output = "{\"status\":\"error\", \"data\":\"Error while inserting the item.\"}";
@@ -128,8 +129,6 @@ public class Review {
 		 return output;
 		}
 	}
-	
-	
 	
 	
 	public String updateReview(String reviewID, String reviewType,String reviewDesc, String reviewValue)
@@ -145,13 +144,8 @@ public class Review {
 		 {return "Error while connecting to the database for updating."; }
 		 // create a prepared statement
 		 
-		 //check validations
-		 //check empty fields
-		 else if(reviewType.equals("") || reviewValue.equals("")) {
-			 return "please add a rating";
-		 } 
-			 
-		 else {
+		
+		  
 		 String query = "UPDATE reviews SET reviewType=?,reviewDesc=?,reviewValue=? WHERE reviewID=?";
 		 PreparedStatement preparedStmt = con.prepareStatement(query);
 		 // binding values
@@ -160,13 +154,14 @@ public class Review {
 		 preparedStmt.setInt(3, Integer.parseInt(reviewValue));
 		 
 		 preparedStmt.setInt(4, Integer.parseInt(reviewID));
+		 
 		 // execute the statement
 		 preparedStmt.execute();
 		 con.close();
 		 String newItems = readReviews();
 		 output = "{\"status\":\"success\", \"data\": \"" + newItems + "\"}";
 		 }
-		 }
+		 
 		 
 		 catch (Exception e)
 		 {

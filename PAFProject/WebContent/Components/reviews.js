@@ -1,31 +1,30 @@
-$(document).ready(function()
-{
-if ($("#alertSuccess").text().trim() == "")
- {
- $("#alertSuccess").hide();
- }
- $("#alertError").hide();
+//hide alert
+$(document).ready(function() {
+
+	$("#alertSuccess").hide();
+	$("#alertError").hide();
+	$("#hidOrderIDSave").val("");
+	$("#formItem")[0].reset();
 });
 
-// SAVE ============================================
-$(document).on("click", "#btnSave", function(event)
-		{
-		// Clear alerts---------------------
-		 $("#alertSuccess").text("");
-		 $("#alertSuccess").hide();
-		 $("#alertError").text("");
-		 $("#alertError").hide();
-		 
-		// Form validation-------------------
-		var status = validateItemForm();
-		if (status != true)
-			 {
-			 $("#alertError").text(status);
-			 $("#alertError").show();
-			 return;
-		 }
+$(document).on("click", "#btnSave", function(event) {
+
+	// Clear alerts---------------------
+	$("#alertSuccess").text("");
+	$("#alertSuccess").hide();
+	$("#alertError").text("");
+	$("#alertError").hide();
+	
+	// Form validation-------------------
+	var status = validateItemForm();
+	if (status != true) {
+		$("#alertError").text(status);
+		$("#alertError").show();
+		return;
+	}
+	
 		// If valid------------------------
-		var type = ($("#hidItemIDSave").val() == "") ? "POST" : "PUT";
+		var type = ($("#reviewID").val() == "") ? "POST" : "PUT";
 		 $.ajax(
 		 {
 			 url : "ReviewAPI",
@@ -49,7 +48,7 @@ if (status == "success")
 	 {
 		 $("#alertSuccess").text("Successfully saved.");
 		 $("#alertSuccess").show();
-		 $("#divItemsGrid").html(resultSet.data);
+		 $("#reviewGrid").html(resultSet.data);
  } else if (resultSet.status.trim() == "error")
  {
 	 $("#alertError").text(resultSet.data);
@@ -65,17 +64,17 @@ if (status == "success")
 	 $("#alertError").show();
  } 
 
-	 $("#hidItemIDSave").val("");
+	 $("#reviewID").val("");
 	 $("#formItem")[0].reset();
 }
 
 // UPDATE==========================================
 $(document).on("click", ".btnUpdate", function(event)
 {
- $("#hidItemIDSave").val($(this).closest("tr").find('#hidItemIDUpdate').val());
- $("#reviewType").val($(this).closest("tr").find('td:eq(0)').text());
- $("#reviewDesc").val($(this).closest("tr").find('td:eq(1)').text());
- $("#reviewValue").val($(this).closest("tr").find('td:eq(2)').text());
+ $("#reviewID").val($(this).closest("tr").find('td:eq(0)').text());
+ $("#reviewType").val($(this).closest("tr").find('td:eq(1)').text());
+ $("#reviewDesc").val($(this).closest("tr").find('td:eq(2)').text());
+ $("#reviewValue").val($(this).closest("tr").find('td:eq(3)').text());
 });
 
 function onItemSaveComplete(response, status)
@@ -87,7 +86,7 @@ if (status == "success")
 	{
 	$("#alertSuccess").text("Successfully saved.");
 	$("#alertSuccess").show();
-	$("#divItemsGrid").html(resultSet.data);
+	$("#reviewGrid").html(resultSet.data);
 	} else if (resultSet.status.trim() == "error")
 	{
 	$("#alertError").text(resultSet.data);
@@ -102,7 +101,7 @@ if (status == "success")
 	$("#alertError").text("Unknown error while saving..");
 	$("#alertError").show();
 	}
-	$("#hidItemIDSave").val("");
+	$("#reviewID").val("");
 	$("#formItem")[0].reset();
 }
 
@@ -126,18 +125,9 @@ function validateItemForm()
 	 {
 	 return "Insert reviewValue.";
 	 }
-	/*
-	// is numerical value
-	var tmpPrice = $("#amount").val().trim();
-	if (!$.isNumeric(tmpPrice))
-	 {
-	 return "Insert a numerical value for amount.";
-	 }
-	// convert to decimal price
-	 $("#amount").val(parseFloat(tmpPrice).toFixed(2));
-	
+
 	return true;
-	*/
+
 }
 
 $(document).on("click", ".btnRemove", function(event)
@@ -164,7 +154,7 @@ if (status == "success")
  {
  $("#alertSuccess").text("Successfully deleted.");
  $("#alertSuccess").show();
- $("#divItemsGrid").html(resultSet.data);
+ $("#reviewGrid").html(resultSet.data);
  } else if (resultSet.status.trim() == "error")
  {
  $("#alertError").text(resultSet.data);
